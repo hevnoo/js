@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div style="height: 150vh;"></div>
+
+    <script>
+        //节流throttle代码：
+        function throttle(fn,delay) {
+            let canRun = true; // 通过闭包保存一个标记
+            return function () {
+                // 在函数开头判断标记是否为true，不为true则return
+                if (!canRun) return;
+                // 立即设置为false
+                canRun = false;
+                // 将外部传入的函数的执行放在setTimeout中
+                setTimeout(() => { 
+                    // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。
+                    // 当定时器没有执行的时候标记永远是false，在开头被return掉
+                    console.log(...arguments)
+                    fn.apply(null, arguments);
+                    canRun = true;
+                }, delay);
+            };
+        }
+        
+        function sayHi(e) {
+            console.log('节流：', e.target.innerWidth, e.target.innerHeight);
+        }
+        window.addEventListener('resize', throttle(sayHi,1000));
+        //
+        // function show() {
+        //     console.log( arguments );
+        // }
+        // show(10,20,30,40,50);
+    </script>
+</body>
+</html>

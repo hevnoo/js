@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //数据代理：三个参数分别是 目标对象、新声明的属性名、方法对象；
+        var obj = {};
+        var initValue = 'hello';
+        Object.defineProperty(obj,"__initValue",{
+            get:function (){
+                //当获取值的时候触发的函数
+                return initValue;    
+            },
+            set:function (value){
+                //当设置值的时候触发的函数,设置的新值通过参数value拿到
+                initValue = value;
+            }
+        });
+        obj.__initValue = '修改'
+        //获取值
+        console.log(obj.__initValue);
+        console.log(initValue)
+        console.log(obj)
+        //结论：对属性initValue进行代理，修改值时源数据也会变。
+    </script>
+</body>
+</html>

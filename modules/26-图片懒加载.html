@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            margin-bottom: 100px;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <img src="" data-src="../assets/img/1.jpg" alt="" class="img">
+        <img src="" data-src="../assets/img/2.jpg" alt="" class="img">
+        <img src="" data-src="../assets/img/3.jpg" alt="" class="img">
+        <img src="" data-src="../assets/img/4.jpg" alt="" class="img">
+        <img src="" data-src="../assets/img/5.jpg" alt="" class="img">
+        <img src="" data-src="../assets/img/6.jpg" alt="" class="img">
+    </div>
+
+    <script>
+        /*
+        懒加载原理： 图片进入可视区域之后再去请求图片资源。
+        */
+        let viewport = document.documentElement;
+        let imgArr = [].slice.call(document.querySelectorAll('.img'));
+
+        window.onload = function(){
+            window.addEventListener('scroll', debounce(lazyloadImg))
+        }
+
+        //页面滚动防抖
+        function debounce(fn){
+            let timer;
+            return function(){
+                clearTimeout(timer);
+                timer = setTimeout(()=>{
+                    fn()
+                }, 500)
+            }
+        }
+
+        //判断某一个元素是否在可视区
+        function isVisible(ele){
+            let rect = ele.getBoundingClientRect();//返回一个对象，提供当前元素节点的大小、位置等信息，基本上就是 CSS 盒状模型的所有信息。
+            // 用户不管是从上向下、从下向上、从左向右、从右向左滑动，都可以判断当前元素是否在可视区域。
+            return rect.top < viewport.clientHeight && rect.bottom > 0 && rect.left < viewport.clientWidth && rect.right > 0;
+        }
+
+        //该函数动态设置图片的src属性，动态加载图片
+        function lazyloadImg(){
+            for(let i=0; i<imgArr.length; i++){
+                if(isVisible(imgArr[i])){
+                    imgArr[i].src = imgArr[i].getAttribute('data-src');
+                    imgArr.splice(i, 1);
+                    i--;
+                }
+            }
+            
+        }
+        lazyloadImg();// 一开始先执行一次，把在第一次进入页面时在可视区域的图片加载出来
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj = {
+            a: '一',
+            b: '二',
+            c: '三',
+            list:['red','blue','green']
+        }
+        let newObj = {}
+        //1.对象赋值：
+        // info = obj;
+        // info.a = '修改'
+
+        //2.浅拷贝：
+        // for(o in obj){
+        //     newObj[o] = obj[o]
+        // }
+        // newObj.a = '修改1'
+        // newObj.list[0] = '修改1.1'
+        
+        //3.深拷贝：
+        newObj = JSON.parse(JSON.stringify(obj))
+        newObj.a = '修改2'
+        newObj.list[0] = '修改2.2'
+        console.log( '旧：', obj, '新：', newObj )
+        
+        function run (){
+            
+        }
+        const jump = function(){
+            
+        }
+    </script>
+</body>
+</html>

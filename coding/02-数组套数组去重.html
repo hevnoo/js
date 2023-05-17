@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Object.prototype.toString.call(item[i]) == '[object Array]'
+        let arr = [[1, 2, 2], [1, 2, 3], [1, [7, 8, 7]], [[1, 2, 1], [4, [7, 8, 8, [6, 6]]], 12], 10, 10];
+        // let res = [];
+        
+        function run(arr){
+            let res = []
+            arr = re(arr);
+            if(arr.some(s=>Object.prototype.toString.call(s) == '[object Array]')){
+                
+                arr.map((item, index)=>{
+                    if(Object.prototype.toString.call(item) == '[object Array]'){
+                        res.push(run(item))
+                    }else{
+                        res.push(item)
+                    }
+                })
+            }else{
+                return res
+            }
+            
+        }
+        // run(arr)
+        console.log(run(arr))
+
+        function re(arr){
+            return Array.from(new Set(arr))
+        }
+
+        // let arr = [[1, 2, 2], [1, 2, 3], [1, [7, 8, 7]], [[1, 2, 1], [4, [7, 8, 8, [6, 6]]], 12], 10, 10];
+        
+        // function noRepeat(arr) {
+        //     let brr = [];
+        //     let set = new Set(arr);
+        //     let setArr = [...set];
+        //     setArr.forEach((item) => {
+        //         if (Array.isArray(item)) {
+        //             brr.push(noRepeat(item))
+        //         } else {
+        //             brr.push(item);
+        //         }
+        //     })
+        //     return brr;
+        // }
+        // console.log(noRepeat(arr));
+    </script>
+</body>
+</html>

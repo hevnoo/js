@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="height: 150vh;"></div>
+    <script>
+        function debounce(fn,delay) {
+            var timeout = null; // 创建一个标记用来存放定时器的返回值
+            return function (e) {
+                // 每当用户输入的时候把前一个 setTimeout clear 掉
+                clearTimeout(timeout); 
+                // 然后又创建一个新的 setTimeout, 这样就能保证interval 间隔内如果时间持续触发，就不会执行 fn 函数
+                timeout = setTimeout(() => {
+                    fn.apply(null, arguments);
+                    // fn()
+                }, delay);
+            };
+        }
+        // 处理函数
+        function handle() {
+            // console.log(this,arguments)
+            console.log('防抖：', Math.random());
+        }
+
+        //滚动事件，绑定滚动事件到debounce函数
+        window.addEventListener('scroll', debounce(handle,500));
+
+    </script>
+</body>
+</html>

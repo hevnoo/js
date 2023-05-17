@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 800px;
+            height: 50px;
+            background-color: rgb(0, 0, 0, 0.1);
+            border-bottom: 1.5px solid rgb(35, 169, 242, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* padding: 0 10px; */
+        }
+        .item{
+            width: 100px;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        ._active{
+            color: rgb(35, 169, 242, 1);
+            background-color: #fff;
+            width: 100px;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+
+        /* 内容 */
+        .content{
+            width: 800px;
+            height: 200px;
+            background-color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div id="w" class="wrapper">
+        <!-- <div class="item"></div> -->
+    </div>
+    <!-- 内容 -->
+    <div id="c" class="content">
+        <!-- <div class="p"></div> -->
+    </div>
+
+    <script>
+        let list = [
+            {id: 1, name: '首页'},
+            {id: 2, name: '详情'},
+            {id: 3, name: '关于'},
+            {id: 4, name: '列表'},
+            {id: 5, name: '设置'},
+        ]
+
+        //遍历添加元素
+        function loop(){
+            for(let i=0; i<list.length; i++){
+                let item = document.createElement('DIV');//1. 创建div元素
+                let name = document.createTextNode(list[i].name);//2. 赋值文本
+                item.appendChild(name);//将文本添加到元素里
+                document.getElementById('w').appendChild(item);//3. 将元素添加到指定父节点下面
+                let classes = document.createAttribute('class');//4. 创建class属性
+                classes.value = 'item';//定义对应的css
+                item.setAttributeNode(classes);//将属性添加到每个节点上
+
+                //内容
+                let p = document.createElement('DIV');//1. 创建展示内容的p元素
+                document.getElementById('c').appendChild(p);
+                let p_class = document.createAttribute('class');
+                p_class.value = 'p';
+                p.setAttributeNode(p_class);
+            }
+        }
+        loop()
+
+        //
+        window.onload = function(){
+            realize();
+        }
+
+        //实现tab栏效果
+        function realize(){
+            // let arr = document.getElementsByClassName('item');
+            let arr = document.querySelectorAll('.item');
+            arr[0].className = '_active';//初始化
+            let p = document.querySelectorAll('.p');
+            p[0].innerHTML = 0;
+
+            for(let i=0; i<arr.length; i++){
+                arr[i].setAttribute('index', i);//给每个元素设置一个自定义属性，用来记录下标
+
+                arr[i].addEventListener('click', function(){
+                    for(let n=0; n<arr.length; n++){ //排他思想
+                        arr[n].className = 'item';
+                    };
+                    arr[i].className = '_active';
+                    
+                    //内容
+                    let index = arr[i].getAttribute('index');
+                    getView(index, p);
+                })
+                
+            }
+        }
+        //根据激活的按钮改变内容
+        function getView(index, p){
+            for(let i=0; i<p.length; i++){
+                p[i].innerHTML = '';
+                p[i].style.display = 'none';
+                let ii = document.createTextNode(index);
+                p[i].appendChild(ii);
+            }
+            p[index].style.display = 'block';
+
+        }
+        
+    </script>
+</body>
+</html>

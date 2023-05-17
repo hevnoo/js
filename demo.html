@@ -1,0 +1,417 @@
+<template>
+    <div class="container_">
+        <div class="wrapper_">
+            <header class="words">
+                <div class="top">
+                    <span>在这里留言</span>
+                </div>
+                <el-input v-model="text" @keyup.enter.native="addWords()" type="textarea" :rows="6" placeholder="请输入内容"></el-input>
+                <div class="btn">
+                    <span class="left">
+                        <i class="el-icon-scissors"></i>
+                        <span class="copy" v-copy="text">复制</span>
+                    </span>
+                    <span class="right">
+                        <el-button class="login" plain v-permission="isSignIn">
+                            <router-link to="/login">登录</router-link>
+                        </el-button>
+                        <el-button class="send" v-debounce="addWords" type="primary" plain>提交</el-button>
+                    </span>
+                </div>
+            </header>
+            <div class="list">
+                <div class="top_">
+                    <span>{{wordsList.length}}条评论</span>
+                </div>
+                <div class="box" v-for="item in wordsList" :key="item.id">
+                    <!-- 1父级 -->
+                    <div class="card">
+                        <main class="main">
+                            <div class="img_">
+                                <img :src="item.head_img" alt="">
+                            </div>
+                            <div class="info">
+                                <div class="info_">
+                                    <span class="nickname">{{item.nickname}}</span>
+                                </div>
+                                <div class="theWords">{{item.words}}</div>
+                                <div class="detail">
+                                    <!-- <span class="time">{{item.create_time.slice(0,16)}}</span> -->
+                                    <span class="time">{{item.create_time}}</span>
+                                    <i class="el-icon-chat-dot-round"></i>
+                                    <span class="re" @click="_reTo(item.id)" v-if="is==true&&reId==item.id">取消回复</span>
+                                    <span class="re" @click="reTo(item.id)" v-else>回复</span>
+                                </div>
+                            </div>
+                        </main>
+                        <!-- 回复框 -->
+                        <footer v-if="is==true&&reId==item.id" :class="reId==item.id?'reto':'retos'">
+                            <el-input class="area" v-model="reText" type="textarea" :rows="3" placeholder="请输入内容"></el-input>
+                            <el-button class="public" @click="publics(item,item.id)" type="success" plain>发布</el-button>
+                        </footer>
+                    </div>
+                    <!-- 2子级 -->
+                    <div class="_card">
+                        <main class="_main">
+                            <div class="img_ _img">
+                                <img :src="item.head_img" alt="">
+                            </div>
+                            <div class="info info1">
+                                <div class="info_">
+                                    <span class="nickname">{{item.nickname}}</span>
+                                </div>
+                                <div class="theWords">{{item.words}}</div>
+                                <div class="detail">
+                                    <span class="time">{{item.create_time}}</span>
+                                    <i class="el-icon-chat-dot-round"></i>
+                                    <span class="re" @click="_reTo(item.id)" v-if="is==true&&reId==item.id">取消回复</span>
+                                    <span class="re" @click="reTo(item.id)" v-else>回复</span>
+                                </div>
+                            </div>
+                        </main>
+                        <!-- 回复框 -->
+                        <footer v-if="is==true&&reId==item.id" :class="reId==item.id?'reto':'retos'">
+                            <el-input class="area" v-model="reText" type="textarea" :rows="3" placeholder="请输入内容"></el-input>
+                            <el-button class="public" @click="publics(item,item.id)" type="success" plain>发布</el-button>
+                        </footer>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    
+    export default {
+        name: 'WordsList',
+        components:{
+            
+        },
+        data(){
+            return{
+                info:{
+                    // id:null,
+                    head_img:null,
+                    nickname:null,
+                    words:null,
+                    create_time:null,
+                    father_words_id:null,
+                    to_user_id:null,
+                    child:{
+                        // id:null,
+                        head_img:null,
+                        nickname:null,
+                        words:null,
+                        create_time:null,
+                        father_words_id:null,
+                        to_user_id:null,
+                    }
+                },
+                wordsList:[],
+                text:'',//留言内容
+                reId:null,
+                is:false,
+                reText:'',//回复内容
+                // father_words_id:null,
+                // to_user_id:null,
+                newList:[],
+            }
+        },
+        methods:{
+            //处理数据
+            getNew(e){
+                let fatherList=[];
+                let sonList=[];
+                let one=null;
+                let two=null;
+                // console.log('数据',e)
+                fatherList = e.filter((f)=>{
+                    return f.father_words_id==null&&f.to_user_id==null
+                });
+                one = e.filter((f1)=>{
+                    return f1.father_words_id!==null&&f1.to_user_id==null
+                });
+                two = e.filter((f2)=>{
+                    return f2.father_words_id==null&&f2.to_user_id!==null
+                });
+                this.newList.unshift(fatherList);
+                sonList.unshift(one);
+                sonList.push(two);
+                this.newList.push(sonList);
+                console.log(this.newList);
+            },
+            //获取全部留言
+            getWordsList(){
+                this.$axios.get('/api/words/wordsList')
+                .then((res)=>{
+                    if(res.data.code === 0){
+                        this.wordsList = res.data.data;
+                        // this.info = res.data.data;
+                        this.getNew(res.data.data)
+                        // console.log(this.info)
+                    }
+                }).catch(e=>{
+                    console.log(e)
+                })
+            },
+            //添加留言
+            addWords() {
+                if(this.text!='' && this.$store.state.tokens.isSignIn==1){
+                    this.$axios.post('/api/words/addWords',{
+                        words:this.text,
+                        father_words_id:null,
+                        to_user_id:null
+                    }).then((res)=>{
+                        if(res.data.code === 0){
+                            this.text = ''
+                            this.getWordsList()
+                        }
+                    }).catch(e=>{
+                        console.log(e)
+                    })
+                }
+            },
+            //添加回复
+            addReWords(item,id) {
+                if(this.text!='' && this.$store.state.tokens.isSignIn==1){
+                    if(item.to_user_id==null){//当前为一级
+                        this.$axios.post('/api/words/addWords',{
+                            words:this.reText,
+                            father_words_id:id,
+                            to_user_id:null
+                        }).then((res)=>{
+                            if(res.data.code === 0){
+                                this.reText = ''
+                                this.getWordsList()
+                            }
+                        }).catch(e=>{
+                            console.log(e)
+                        })
+                    }else{//当前为二级
+                        this.$axios.post('/api/words/addWords',{
+                            words:this.reText,
+                            father_words_id:null,
+                            to_user_id:id
+                        }).then((res)=>{
+                            if(res.data.code === 0){
+                                this.reText = ''
+                                this.getWordsList()
+                            }
+                        }).catch(e=>{
+                            console.log(e)
+                        })
+                    }
+                    
+                }
+            },
+            publics(item,id){
+                this.addReWords(item,id)
+                this.is=false;
+            },
+            reTo(id){//回复事件
+                this.reId=id;
+                this.is=true;
+                // this.addReWords(item,id)
+            },
+            _reTo(id){
+                this.reId=id;
+                this.is=false;
+            },
+        },
+        computed:{
+            // 是否登录，转换为string类型
+            isSignIn() {
+                return this.$store.state.tokens.isSignIn.toString();
+            }
+        },
+        created(){
+            this.getWordsList();
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+
+    .wrapper{
+        width: 850px;
+    }
+    .words{
+        width: 850px;
+        height: 280px;
+        // background-color: aquamarine;
+        box-shadow: 0 2px 8px 8px rgba(0, 0, 0, 0.1);
+        margin: 80px auto 60px auto;
+        border-radius: 10px;
+    }
+    .top{
+        height: 45px;
+        font-size: 18px;
+        font-weight: 500;
+        color: rgba(0,0,0,0.7);
+        border-bottom: 2px dashed rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        span{
+            margin-left: 15px;
+        }
+    }
+    .el-textarea{
+        // border: 1px solid #30b8f5;
+        border-radius: 5px;
+    }
+    ::v-deep .el-textarea__inner{
+        background-color: transparent !important;
+        border: 0;
+        font-size:large;
+    }
+    .btn{
+        margin-top: 20px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // background-color: red;
+        .left{
+            margin-left: 20px;
+            color: rgba(0,0,0,0.4);
+            cursor: pointer;
+            .copy{
+                font-size: 14px;
+                margin-left: 10px;
+            }
+        }
+        .right{
+            margin-right: 20px;
+            .send{
+                color: #6bc30d;
+                background: #ecf5ff;
+                border-color: rgba(63, 119, 136, 0.5);
+            }
+            .send:hover{
+                background-color: rgba(63, 119, 136, 0.1);
+            }
+        }
+    }
+    
+    .list{
+        width: 850px;
+        min-height: 300px;
+        // background-color: pink;
+        margin-bottom: 50px;
+        padding: 20px;
+        .top_{
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(0,0,0,0.7);
+            margin: 10px auto 40px auto;
+        }
+    }
+    .box{
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+    .card{
+        width: 820px;
+        margin: auto auto -10px auto;
+        // background-color: rgba(0,0,0,0.1);
+    }
+    .main{
+        margin: 20px auto 20px -10px;
+        // border-bottom: 1px solid rgba(0,0,0,0.12);
+        display: flex;
+        justify-content: space-between;
+    }
+    .img_{
+        img{
+            width: 50px;
+            height: 50ox;
+            border-radius: 100%;
+        }
+        margin-bottom: 10px;
+    }
+    .info{
+        flex:1;
+        margin: 5px auto auto 20px;
+        .info_{
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(0,0,0,0.4);
+            margin: auto auto 10px auto;
+        }
+        .nickname{
+            color: rgba(0,0,0,0.7);
+            margin-right: 10px;
+        }
+        .time{
+            font-size: 13px;
+        }
+    }
+    .detail{
+        font-size: 14px;
+        font-weight: 500;
+        margin: 15px auto 15px auto;
+        color: rgba(0,0,0,0.4);
+        cursor: pointer;
+        .el-icon-chat-dot-round{
+            margin: auto auto auto 30px;
+        }
+        .re{
+            font-size: 13px;
+            margin: auto auto auto 3px;
+        }
+        .re:hover{
+            color: #30b8f5;
+        }
+    }
+    .theWords{
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(0,0,0,0.9);
+        // margin: 15px auto auto auto;
+        cursor: pointer;
+    }
+    // .reto{
+        
+    // }
+    // .retos{
+    //     overflow: hidden;
+    // }
+    .area{
+        border: 1px solid #30b8f5;
+        border-radius: 5px;
+    }
+    ::v-deep .el-textarea__inner{
+        font-size: 15px !important;
+    }
+    .public{
+        margin: 10px auto 10px auto;
+    }
+    //子级
+    ._card{
+        width: 760px;
+        margin: auto auto auto 60px;
+        background-color: rgba(0,0,0,0.04);
+        border-radius: 5px;
+    }
+    ._main{
+        margin: 20px auto 20px auto;
+        // border-bottom: 1px solid rgba(0,0,0,0.12);
+        display: flex;
+        justify-content: space-between;
+    }
+    ._img{
+        margin: 10px auto auto 10px;
+        img{
+            width: 40px;
+            height: 40px;
+        }
+    }
+    .info1{
+        margin-top: 15px;
+    }
+
+</style>

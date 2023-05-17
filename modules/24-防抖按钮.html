@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <button class="btn">debounce</button>
+    </div>
+    <script>
+        window.onload = function(){
+            realize()
+        }
+        function realize(){
+            let btn = document.getElementsByClassName('btn')
+            //绑定点击事件到debounce函数
+            btn[0].addEventListener('click', debounce(run))
+            // btn[0].addEventListener('click', function(){
+            //     debounce(run);
+            // })
+        }
+
+        //防抖
+        function debounce(fn){
+            let timer;
+            return function(){
+                clearTimeout(timer);
+                timer = setTimeout(()=>{
+                    // fn.apply(null, arguments)
+                    fn()
+                }, 800)
+            }
+        }
+        
+        //点击的事件
+        function run(){
+            console.log('***', Math.random())
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Animal(n,m){
+            this.count = 0;
+            this.age = 22;
+            console.log( count = n + m )
+            this.jump = function(){
+                console.log(this.age)
+            }
+        }
+        let dog = new Animal(2,3)
+        dog.jump()
+        //--------下面是类的写法-----------
+        class Person{
+            count = 0;
+            age = 22;
+            constructor(x,y){
+                console.log( this.count = x + y )
+                return this.count
+            }
+            run(){
+                console.log(this.age)
+            }
+        }
+        let son = new Person(1,2)
+        son.run()
+        
+    </script>
+</body>
+</html>

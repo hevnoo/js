@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        假设有人给定一个公式字符串，请你完成公式计算式得出结果，如:2+8/2*(5+5+3)
+        */
+       //做法一：
+        function getVal(str){
+            let a = str.split('(')[1].split(')')
+            let aRes = 0;
+            if(a[0].includes('+') && !a[0].includes('-')){
+                let aa = a[0].split('+')
+                aa.map((item)=>{
+                    aRes += Number(item)
+                })
+                // console.log(aRes)
+            }
+            let b = str.split('/')
+            let c = str.split('*')
+            // console.log(b,c)
+            //先有除法
+            let cRes = 0;
+            if(b[0].length<c[0].length){
+                let lastChar = b[0].charAt(b[0].length-1);//获取最后一个字符
+                let firstChar = b[1].charAt(0);//第一个字符
+                let bRes = 0;
+                bRes = Number(lastChar)/Number(firstChar)
+                
+                let _lastChar = c[0].charAt(b[0].length-1);//获取最后一个字符
+                let _firstChar = c[1].charAt(0);//第一个字符
+                let aVal = c[1].split('(')[1].split(')')
+                if(_firstChar == '('){
+                    if(aVal[0] == a[0]){
+                        cRes = bRes*aRes
+                        // console.log(cRes)
+                    }
+                }
+            }
+            //最后算加减
+            let d = str.split('+')
+            let dRes = cRes+Number(d[0])
+            console.log(dRes)
+       }
+       getVal('2+8/2*(5+5+3)')
+
+       
+       //做法二：直接用eval函数
+       function getEvalVal(str){
+            console.log(eval(str))
+       }
+       getEvalVal('2+8/2*(5+5+3)+3*(1+2-1)')
+    </script>
+</body>
+</html>

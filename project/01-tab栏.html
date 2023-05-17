@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+body
+{
+    /* position: relative; */
+}
+/* header
+{
+    background-color: aquamarine;
+} */
+.w
+{
+    width: 700px;
+    margin: 0 auto;
+}
+header>ul li
+{
+    padding: 5px 30px;
+    height: 30px;
+    display: inline-block;
+    list-style: none;
+}
+header ul
+{
+    background-color: rgb(248, 248, 248);
+    border-bottom:orange solid 2px;
+}
+.item
+{
+    display: none;
+}
+.current
+{
+    /*背景变红*/
+    background-color: red;
+    /* 字体变白 */
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <header class="w">
+        <ul>
+            <li>商品介绍</li>
+            <li>规格与包装</li>
+            <li>售后保障</li>
+            <li>商品评价</li>
+            <li>手机社区</li>
+        </ul>
+        <div class="tab_cont">
+            <div class="item" style="display: block;">
+                1
+            </div>
+            <div class="item">
+                2
+            </div>
+            <div class="item">
+                3
+            </div>
+            <div class="item">
+                4
+            </div>
+            <div class="item">
+                5
+            </div>
+        </div>
+    </header>
+    <!--  -->
+    <script>
+         // 找到tab栏标题的每一项存到tab数组中
+         var tab = document.querySelector('ul').querySelectorAll('li');
+        // 找到内容栏的每一项
+        var items = document.querySelector('.tab_cont').querySelectorAll('div');
+        // 使用for循环给tab数组每一项设置监听
+        for(var i = 0;i<tab.length;i++)
+        {
+            // 用js数组给items设置一个自定义属性，tab数组的每一项与之对应
+            tab[i].setAttribute("index",i);
+            // 给所有按钮设置监听
+            tab[i].onclick = function(){
+                // 排他思想,把所有元素属性清空
+                for(var j=0;j<tab.length;j++)
+                    tab[j].className='';
+                // 点击后把current属性加上
+                this.className='current';
+                // 找到目前点击的li元素的下标
+                var index=this.getAttribute('index');
+                // 排它思想
+                for(var k=0;k<items.length;k++)
+                    items[k].style.display="none";
+                // 把于li元素同样下标的div元素显示
+                items[index].style.display='block';
+            }
+        }
+
+    </script>
+    <!--  -->
+    
+
+</body>
+</html>
