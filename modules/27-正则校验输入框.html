@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id="comment" name="comment"></textarea>
+    <p id="warning" style="display: none; color: red;">评论内容长度需在10-200字之间。</p>
+
+    <script>
+        const commentInput = document.getElementById('comment');
+        const warningMsg = document.getElementById('warning');
+
+        // commentInput.addEventListener('input', rule);
+        commentInput.addEventListener('input', debounce(rule));
+
+        //校验
+        function rule() {
+            let commentValue = commentInput.value;
+            console.log('变量', commentInput.value)
+            if (/^.{10,200}$/.test(commentValue)) {
+                warningMsg.style.display = "none";
+            } else {
+                warningMsg.style.display = "block";
+            }
+        }
+
+        //防抖
+        function debounce(fn){
+            let timer;
+            return function (){
+                clearTimeout(timer);
+                timer = setTimeout(()=>{
+                    fn()
+                }, 800)
+            }
+        }
+    </script>
+</body>
+</html>

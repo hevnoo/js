@@ -7,10 +7,28 @@
     <title>Document</title>
 </head>
 <body>
-
-
     <script>
+        //获取当前时间戳
+        var timestamp = Date.parse(new Date()); //1610075969000 
+        console.log(timestamp)
 
+        //js把时间戳转为为普通日期格式
+        function format(timestamp)
+            {
+                //dataString是整数，否则要parseInt转换
+                var time = new Date(timestamp);
+                var year = time.getFullYear();
+                var month = time.getMonth()+1;
+                var day = time.getDate();
+                var hour = time.getHours();
+                var minute = time.getMinutes();
+                var second = time.getSeconds();
+                return year+'-'+(month<10?'0'+month:month)+'-'+(day<10?'0'+day:day)+' '+(hour<10?'0'+hour:hour)+':'+(minute<10?'0'+minute:minute)+':'+(second<10?'0'+second:second)
+            }
+        console.log(format(timestamp));//1620449430000
+
+
+        //获取当前时间
         function getNowTime() {
             var date = new Date();
             //年 getFullYear()：四位数字返回年份
@@ -29,7 +47,6 @@
             var time = '当前时间是：' + year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(minute) + ':' + addZero(second);
             return time;
         }
-
 
         //小于10的拼接上0字符串
         function addZero(s) {
