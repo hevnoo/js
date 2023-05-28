@@ -13,21 +13,25 @@
             two: ''
         }
         let val = ''
-        
-        //这里等于let obj1 = getValueByName({})
-        let obj1 = obj
-        //
-        let val1 = val
 
+        function getVal(obj){
+            return obj
+        }
         
-        obj1.one = '1aaa'
+        //这里等于let newObj = getValueByName({})
+        // let newObj = obj
+        let newObj = getVal(obj)
         //
-        val1 = 'val1'
+        let newVal = val
+
+        //change
+        newObj.one = 'newObj!!!'
+        newVal = 'newVal!!!'
         
         console.log('obj:', obj)
-        console.log('obj1:', obj1)
+        console.log('newObj:', newObj)
         console.log('val:', val)
-        console.log('val1:', val1)
+        console.log('newVal:', newVal)
         
     </script>
 </body>
