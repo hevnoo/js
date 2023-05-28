@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let person = {
+        //     a: 'aaa',
+        //     b: 'bbb',
+        //     c: 'ccc'
+        // }
+        // let newPerson = JSON.stringify(person)
+        // console.log(newPerson)
+        //发送进度记录
+        // let dataProgress = { id: studyInfo.id }
+        // dataProgress[courseStudyModel['studyProgress']] = currentTime
+        // try {
+        //     await updateTableData(courseStudyModel.modelId, dataProgress)
+        // } catch {
+        //     console.log('error')
+        // }
+        function getProgress(type){
+            let currentTime = 9.12
+            let data = {id: 'id1'}
+            newCurrentTime = {currentTime, type}
+            data['studyProgress'] = JSON.stringify(newCurrentTime)
+            console.log(data)
+        }
+        getProgress('video')
+        console.log(JSON.parse('{}'))
+    </script>
+</body>
+</html>
