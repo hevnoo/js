@@ -5,38 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            }
+            .title {
+            margin-right: auto;
+            }
+            .btn {
+            /* 不需要设置 margin-left */
+            }
+    </style>
 </head>
 <body>
-
+    <div class="container">
+        <h1 class="title">这是标题</h1>
+        <button class="btn">按钮</button>
+    </div>
 
     <script>
 
-        function getNowTime() {
-            var date = new Date();
-            //年 getFullYear()：四位数字返回年份
-            var year = date.getFullYear();  //getFullYear()代替getYear()
-            //月 getMonth()：0 ~ 11
-            var month = date.getMonth() + 1;
-            //日 getDate()：(1 ~ 31)
-            var day = date.getDate();
-            //时 getHours()：(0 ~ 23)
-            var hour = date.getHours();
-            //分 getMinutes()： (0 ~ 59)
-            var minute = date.getMinutes();
-            //秒 getSeconds()：(0 ~ 59)
-            var second = date.getSeconds();
+        // function getNowTime() {
+        //     var date = new Date();
+        //     //年 getFullYear()：四位数字返回年份
+        //     var year = date.getFullYear();  //getFullYear()代替getYear()
+        //     //月 getMonth()：0 ~ 11
+        //     var month = date.getMonth() + 1;
+        //     //日 getDate()：(1 ~ 31)
+        //     var day = date.getDate();
+        //     //时 getHours()：(0 ~ 23)
+        //     var hour = date.getHours();
+        //     //分 getMinutes()： (0 ~ 59)
+        //     var minute = date.getMinutes();
+        //     //秒 getSeconds()：(0 ~ 59)
+        //     var second = date.getSeconds();
 
-            var time = '当前时间是：' + year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(minute) + ':' + addZero(second);
-            return time;
-        }
+        //     var time = '当前时间是：' + year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(minute) + ':' + addZero(second);
+        //     return time;
+        // }
 
 
-        //小于10的拼接上0字符串
-        function addZero(s) {
-            return s < 10 ? ('0' + s) : s;
-        }
+        // //小于10的拼接上0字符串
+        // function addZero(s) {
+        //     return s < 10 ? ('0' + s) : s;
+        // }
 
-        console.log(getNowTime())
+        // console.log(getNowTime())
 
     </script>
 </body>
