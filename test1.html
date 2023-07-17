@@ -1,33 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      /* 主内容区域样式 */
+      .main-content {
+        margin-top: 50px; /* 与头部高度相同 */
+        margin-bottom: 50px; /* 与底部高度相同 */
+        padding: 10px;
+        height: 800px; /* 用来观察滚动效果 */
+        overflow: auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- 头部 -->
+    <div id="header" style="background-color: #f2f2f2; padding: 10px">
+      <h1>Fixed Header Example</h1>
+    </div>
 
+    <!-- 主内容区域 -->
+    <div id="main-content" class="main-content">
+      <h2>主内容区域</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sagittis
+        est sed odio ornare, vel fringilla velit bibendum. Proin ullamcorper
+        vulputate tellus id gravida. Phasellus egestas tellus erat, eu tempor
+        est eleifend eu. Vivamus euismod ultricies magna, ut congue risus
+        iaculis a. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. Aliquam erat volutpat. Vestibulum vel
+        porta mi. Aenean sit amet nulla blandit, suscipit ex sit amet, pulvinar
+        metus.
+      </p>
+
+      <p>
+        Nullam interdum tortor vitae mauris ultrices, vel hendrerit est tempus.
+        Mauris sollicitudin a magna in rutrum. Nullam vel lacinia lectus.
+        Praesent commodo metus aliquet eros faucibus, ac volutpat nulla lacinia.
+        Fusce bibendum felis non sapien tempor, eget venenatis mauris feugiat.
+        Duis eu libero sed dolor dignissim interdum id eget nibh. Sed vitae
+        ultrices purus, eu mattis velit. In sit amet pretium nisi, vel imperdiet
+        quam.
+      </p>
+
+      <p>
+        Nam at ex semper, sollicitudin urna vestibulum, euismod velit. Nulla
+        facilisi. Sed auctor molestie massa, eu faucibus leo blandit ac. Nullam
+        at elit eget lorem aliquet eleifend. Sed in sodales ex. Phasellus
+        efficitur risus sit amet auctor commodo. Cras in lobortis nibh. Cras
+        mollis pretium nunc, eget tincidunt nisi vehicula eu. Nam posuere risus
+        ut sem dictum, nec pharetra mauris mattis. Praesent rhoncus enim ut est
+        ullamcorper, ut molestie enim mollis. Etiam fringilla nibh ipsum, vel
+        bibendum lacus commodo eget. Curabitur sit amet tellus euismod,
+        efficitur diam suscipit, sagittis risus. Donec varius purus quis tortor
+        rhoncus, in congue lacus rutrum.
+      </p>
+
+      <p>
+        Integer porttitor massa ut enim consequat tincidunt. Ut sed neque non
+        orci fringilla auctor. Nullam placerat, quam vitae dictum efficitur,
+        urna lacus scelerisque ipsum, a porttitor felis purus sed augue.
+        Phasellus consectetur egestas ex at pulvinar. Integer finibus mauris et
+        mauris maximus sollicitudin. Pellentesque ligula magna, rutrum nec
+        feugiat eu, vehicula eu sapien. Sed eget vestibulum odio, eu aliquet
+        velit. Fusce convallis tincidunt est nec accumsan. Aliquam erat
+        volutpat. Fusce rutrum metus in facilisis molestie.
+      </p>
+
+      <p>
+        Quisque id enim tincidunt, tempor eros et, malesuada urna. Praesent non
+        lectus condimentum, molestie magna ut, venenatis libero. Quisque
+        faucibus metus vitae mi euismod aliquam. Sed justo nisi, tristique ut
+        justo vel, accumsan pellentesque lectus. Proin aliquam mi ac turpis
+        mollis, in bibendum velit iaculis. In hac habitasse platea dictumst. Nam
+        viverra felis vel quam dignissim, vel fermentum orci scelerisque. Sed
+        sit amet enim non lorem vehicula rhoncus. Nullam bibendum, est a pretium
+        lacinia, elit risus laoreet ipsum, id pharetra ipsum nunc eu ligula.
+      </p>
+
+      <p>
+        Donec euismod sodales erat, eget pulvinar enim molestie non. Fusce id
+        ante et arcu interdum finibus vel id eros. Nunc finibus turpis vitae
+        diam egestas, vel bibendum augue eleifend. Pellentesque habitant morbi
+        tristique senectus et netus et malesuada fames ac turpis egestas.
+        Aliquam pharetra risus sapien, eget accumsan neque malesuada vel.
+        Praesent elementum, ligula at tincidunt hendrerit, purus tortor
+        scelerisque nibh, volutpat lacinia urna ex ut nisl. Sed viverra viverra
+        faucibus. Aenean posuere, ipsum ac faucibus malesuada, lectus lorem
+        rhoncus libero, quis mattis odio nisl eget quam. Maecenas auctor mauris
+        vitae magna congue congue.
+      </p>
+    </div>
+
+    <!-- 底部 -->
+    <div id="footer" style="background-color: #f2f2f2; padding: 10px">
+      <p>&copy; 2023 Fixed Footer Example</p>
+    </div>
     <script>
-        let max = Math.max(1,2,3);//3
-        let random = Math.random();
-        let num = 12.23456;
-        let fix = num.toFixed(2)
-        console.log(fix)
-        console.log(typeof(fix))
+      window.onload = function () {
+        var header = document.getElementById("header");
+        var footer = document.getElementById("footer");
+        var mainContent = document.getElementById("main-content");
 
-        // let parse = parseFloat('321.001')
-        // console.log(parse)
-        // console.log(typeof(parse))
+        var headerHeight = header.offsetHeight;
+        var footerHeight = footer.offsetHeight;
+        var mainContentTop = mainContent.offsetTop;
 
-        let a = '3.1564';
-        let aa = parseFloat(a).toFixed(2);
-        // let aa = a.toFixed(2);
-        console.log(aa)
-        console.log(typeof(aa))
+        window.onscroll = function () {
+          var scrollY = window.scrollY;
 
+          if (scrollY > mainContentTop) {
+            header.style.position = "fixed";
+            header.style.top = "0";
+            header.style.left = "0";
+            header.style.width = "100%";
+            header.style.height = headerHeight + "px";
+            mainContent.style.marginTop = headerHeight + "px"; // 调整主内容区域的边距，避免被头部覆盖
+          } else {
+            header.style.position = "static";
+            mainContent.style.marginTop = "0";
+          }
+
+          if (
+            scrollY + window.innerHeight <
+            document.documentElement.scrollHeight - footerHeight
+          ) {
+            footer.style.position = "fixed";
+            footer.style.bottom = "0";
+            footer.style.left = "0";
+            footer.style.width = "100%";
+            footer.style.height = footerHeight + "px";
+            mainContent.style.marginBottom = footerHeight + "px"; // 调整主内容区域的边距，避免被底部覆盖
+          } else {
+            footer.style.position = "static";
+            mainContent.style.marginBottom = "0";
+          }
+        };
+      };
     </script>
-</body>
+  </body>
 </html>

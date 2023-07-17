@@ -19,12 +19,22 @@
     <div id="animation-element"></div>
     <script>
       const animationElement = document.getElementById("animation-element");
-      const targetPosition = window.innerWidth - animationElement.offsetWidth;
 
-      // 使用setTimeout在下一帧中更新元素位置
-      setTimeout(() => {
-        animationElement.style.transform = `translateX(${targetPosition}px)`;
-      }, 0);
+      function moveAnimation(startX, startY, endX, endY) {
+        const deltaX = endX - startX; // X轴方向的位移
+        const deltaY = endY - startY; // Y轴方向的位移
+
+        // 设置元素初始位置
+        animationElement.style.transform = `translate(${startX}px, ${startY}px)`;
+
+        // 使用setTimeout在下一帧中更新元素位置
+        setTimeout(() => {
+          animationElement.style.transform = `translate(${endX}px, ${endY}px)`;
+        }, 0);
+      }
+
+      // 调用moveAnimation函数，传入起始坐标和终点坐标
+      moveAnimation(100, 100, 300, 200);
     </script>
   </body>
 </html>

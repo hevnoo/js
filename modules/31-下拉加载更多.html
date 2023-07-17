@@ -48,6 +48,7 @@
         const scrollTop = listContainer.scrollTop;
         const clientHeight = listContainer.clientHeight;
         const scrollHeight = listContainer.scrollHeight;
+        console.log("scroll:", scrollTop, clientHeight, scrollHeight);
 
         if (scrollTop + clientHeight >= scrollHeight && !isLoadingMore) {
           loadMore();
