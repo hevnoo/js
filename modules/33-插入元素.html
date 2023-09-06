@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .d1 {
+        width: 500px;
+        height: 200px;
+        border: 1px solid red;
+      }
+      .s1 {
+        width: 100px;
+        height: 100px;
+        background-color: azure;
+      }
+      .newClass {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d1">
+      <span class="s1">
+        <i class="i1">图标</i>
+      </span>
+    </div>
+    <script>
+      window.onload = function () {
+        let data = "参数1";
+        const targetElement = document.querySelector(".s1");
+        targetElement.addEventListener("click", btn(data));
+        const clonedElement = targetElement.cloneNode(true);
+        clonedElement.classList.remove("s1");
+        clonedElement.classList.add("newClass");
+        targetElement.parentElement.insertBefore(clonedElement, targetElement);
+      };
+      function btn(data) {
+        return function () {
+          console.log("***", data);
+        };
+      }
+    </script>
+  </body>
+</html>
